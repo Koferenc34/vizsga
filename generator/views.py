@@ -84,7 +84,7 @@ class Index(View):
             if (form.is_valid()) and str(request.FILES.get('file'))[-4:] == ".pdf":
                 
                 print(str(request.FILES.get('file')))
-                file_path = os.path.join(settings.BASE_DIR, "generator\\Static\\inputFiles", str(request.FILES.get('file')))
+                file_path = os.path.join(settings.BASE_DIR, "generator\\Static", str(request.FILES.get('file')))
                     
                 # Fájl mentése
                 handle.uploaded_file(request.FILES.get('file'), file_path)
