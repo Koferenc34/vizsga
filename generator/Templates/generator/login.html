@@ -1,0 +1,35 @@
+{% include "./base.html" %}
+{% load static %}
+{% block body %}
+
+<head>
+    <link rel="stylesheet" href={% static "login_styles.css" %}>
+</head>
+
+<body>
+    <div class="auth--container">
+        <div class="title--div">
+            <div class="title--appName title--divChild">ONLINE FILE CONVERTER</div>
+            <div class="title--more title--divChild">
+                <div class="title--p">Módosítson fájlokat egyetlen gombnyomással</div>
+                <img src={% static "/assets/file.png" %} width="120px" class="title--img"></img>
+            </div>
+        </div>
+        <div class="form--div">
+            <div class="form--box">
+                <div class="form--title">BEJELENTKEZÉS</div>            
+                    <form class="form--main" action={% url "login_page" %} method="POST">
+                        {% csrf_token %}
+                        <input class="inputField" type="text" name="username" id="username" placeholder="Felhasználó név">
+                        <input class="inputField" type="password" name="password" id="password" placeholder="jelszó">
+                        <button class="submit" type="submit">Belépés</button>
+                    </form>
+                <div class="form--link">
+                    <a href={% url "register_page" %}>Nincs még fiókom</a>
+                </div>   
+            </div>
+        </div>
+    </div>
+</body>
+
+{% endblock %}

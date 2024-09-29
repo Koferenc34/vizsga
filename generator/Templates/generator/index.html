@@ -1,0 +1,138 @@
+{% include "./base.html" %}
+{% load static %}
+{% block body %}
+<head>
+    <link rel="stylesheet" href={% static "styles.css" %}>
+</head>
+
+<body onload="Main()">
+    <div class="container" onclick="Hide_userDiv()">
+        <nav class="navbar">
+            <button class="icon--btn" onclick="barsToggle()">
+                <img class="navbar--icon" width="30px" src={% static "/assets/bars.svg" %} class="bar" alt="bars-image">
+            </button>  
+            <div class="navbar--title">ONLINE FILE CONVERTER</div>
+            <div class="user">
+                <button class="icon--btn">
+                    <img class="navbar--icon" style="filter: brightness(0.6);" width="40px" src={% static "/assets/profile.png" %} class="account" alt="account-image">
+                </button>
+                
+            </div>
+            
+            
+        </nav>
+        
+        <div class="body">
+            <div class="bars--div">
+                <div class="bars--converters">
+                    <h1>Converters</h1>
+                    <ul>
+                        <li><button onclick="setSpace(id)" id="1" class="spaceBtn spaceBtn--active">PDF Merger</button></li>
+                        <li><button onclick="setSpace(id)" id="2" class="spaceBtn">Coming soon</button></li>
+                        <li><button onclick="setSpace(id)" id="3" class="spaceBtn">Coming soon</button></li>
+                    </ul>
+                </div>
+                <div class="bars--guide">
+                    <button onclick="setSpace(id)" id="4" class="spaceBtn guideBtn">Használati útmutató</button>
+                </div>
+            </div>
+            <div class="space">
+
+                <div class="space--1">                 
+                    <div class="space1--title">PDF Merger</div>
+                    <div class="space1--illustration">
+                        <img src={% static "/assets/illustration.png" %} alt="illustration">
+                    </div>
+                    {% if file %}
+                    <div class="space1--controlDownload">
+                        <a href="download/{{file}}" download="file"><button class=" BigBtn space1--download ">Letöltés</button></a>
+                        <a href="download/{{file}}" target="_blank"><button class="space1--preview">Előnézet</button></a>
+                    </div>
+                    {% else %}
+                    <form class="space1--control" action={% url "index" %} method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="fileBox">
+                            <label for="fileInput1" class="BigBtn fileBtn">PDF Feltöltése</label> 
+                            <input type="file" style="display: none;"  name="file" id="fileInput1">
+                            <span class="fileBtn--fileName1">File name</span>
+                        </div>
+                        
+
+                        <div class="layoutBox" style="display: none;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label for="rows">Sorok:</label>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="layoutInput" name="rows" id="rows" min="0" value="0">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="cols">Oszlopok:</label>
+                                    </td>
+                                    <td>
+                                        <input type="number" class="layoutInput" name="cols" id="cols" min="0" value="0">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <button onclick="Convert_display()" type="submit" id="ConvertBtn" class="BigBtn" style="display: none;">Konvertálás</button>
+                        <div id="convert" style="position: relative; display: none;">
+                            <div class="convertingCircle"></div>
+                            <span class="convert--title">Kérlek várj...</span>
+                        </div>
+                        
+                    </form>
+                    {% endif %}
+                </div>
+
+                <div class="space--2">
+                    COMING SOON
+                </div>
+
+                <div class="space--3">
+                    COMING SOON
+                </div>
+
+                <div class="space--4">
+                    GUIDE
+                </div>
+                {% if files %}  
+                <div class="space--5 filesDiv">               
+                    {% for file in files %}
+                        <div class="filesDiv--files">
+                            <div class="files--fileName">
+                                {{file.filename|cut:user.username|cut:'_' }}
+                            </div>
+                            <a href="/download/{{file.filename}}" class="files--control" download="file">
+                                <img width="20px" src={% static "assets/download.svg" %} >
+                            </a>
+                            <a href="/download/{{file.filename}}" class="files--control" target="_blank">
+                                <img width="20px" src={% static "assets/eye.svg" %} alt="">
+                            </a>
+                        </div>
+                    {% endfor %}   
+                </div>  
+                {% else %}
+                <div class="space--5">
+                    <p>Nincsenek fájlok</p>
+                </div>                                 
+                {% endif %}                               
+            </div>
+        </div>
+    </div>
+    <button class="userToggleBtn" onclick="userDiv_toggle()"></button>
+    <div class="userDiv">
+        <div class="userName">{{user.username}}</div>
+        <button class="spaceBtn filesBtn" id="5" onclick="setSpace(id)">Fájlok</button>
+        <div class="logout">
+            <a href={% url "logout" %}>KIJELENTKEZÉS</a>
+        </div>
+    </div>
+    <script src={% static "index.js" %}></script>
+</body>
+
+{% endblock body %}
