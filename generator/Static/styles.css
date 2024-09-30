@@ -55,6 +55,7 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: column;
+    z-index: 4;
 }
 
 
@@ -409,10 +410,13 @@
 
     .bars--div {
         position: fixed;
-        background-color: transparent;
-        backdrop-filter: blur(100px);
+        background: url('/static/assets/Converter_background.jpg') center/cover no-repeat;
         width: 100vw;
         margin: 0;
         padding: 10px;
+        z-index: 2;
+    }
+    .bars--converters h1 {
+        color: white;
     }
   }
