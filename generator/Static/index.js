@@ -4,10 +4,6 @@ const Main = () => {
     document.querySelector('.userDiv').style.display = 'none';
 
     Space1()
-   
-    window.addEventListener('resize', event => {
-        document.querySelector('.space--2').innerHTML = window.innerWidth
-    })
 
 }
 
