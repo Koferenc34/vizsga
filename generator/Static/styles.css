@@ -148,7 +148,7 @@
 }
 
 .bars--guide {
-    padding: 40px;
+    padding: 0px;
     text-align: center;
     align-self: center;
 }
@@ -181,6 +181,7 @@
     
     justify-content: center;
     margin: 30px 30px 30px 0px;
+    overflow: scroll;
 }
 .space--2, .space--3, .space--4, .space--5 {
     display: none;
@@ -210,6 +211,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.space1--illustration img {
+    width: 100%;
 }
 
 .space1--control, .space1--controlDownload {
@@ -218,10 +225,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
 .space1--controlDownload {
     flex-direction: column;
     justify-content: space-around;
+    
 }
 
 
@@ -349,9 +358,8 @@
     color: white;
     padding: 30px;
     padding-top: 10px;
-    overflow: scroll;
 }
-.space--5::-webkit-scrollbar {
+.space::-webkit-scrollbar {
     display: none;
 }
 
@@ -390,3 +398,21 @@
 .files--control:hover {
     opacity: 1;
 }
+
+
+
+
+@media only screen and (max-width: 900px) {
+    .space1--control {
+        flex-direction: column;
+    }
+
+    .bars--div {
+        position: fixed;
+        background-color: transparent;
+        backdrop-filter: blur(100px);
+        width: 100vw;
+        margin: 0;
+        padding: 10px;
+    }
+  }
