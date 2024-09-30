@@ -19,6 +19,7 @@
     padding: 0px 20px;
     color: white;
     font-family: 'Inter', sans-serif;
+    overflow: scroll;
 }
 
 /* TITLE */
@@ -172,4 +173,29 @@
 
 .submit:hover {
     background: #20550ab4;
+}
+
+@media only screen and (max-width: 900px) {
+    .auth--container {
+        flex-direction: column;
+    }
+    .title--div {
+        width: 90%;
+        
+    }
+    .title--appName {
+        font-size: 10vw;
+    }
+    .title--p {
+        font-size: 5vw;
+        margin-left: 10px;
+        margin-right: 80px;
+    }
+
+    .form--div, .form--box {
+        width: 100%;  
+    }
+    .form--div {
+        margin: 0;
+    }
 }
