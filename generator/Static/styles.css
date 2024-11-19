@@ -2,7 +2,9 @@
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    scrollbar-color: unset !important;
 }
+
 
 .container{
     width: 100vw;
@@ -184,8 +186,19 @@
     margin: 30px 30px 30px 0px;
     overflow: scroll;
 }
+.space::-webkit-scrollbar {
+    display: none; 
+}
+
 .space--2, .space--3, .space--4, .space--5 {
     display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    width: 100%;
+    height: 100%;
+    
 }
 
 /* SPACE 1 */
@@ -233,6 +246,12 @@
     justify-content: space-around;
     
 }
+
+.space--4 {
+    align-items: normal;
+    justify-content: flex-start;
+}
+.guideTitle { color: #fff; }
 
 
 .BigBtn {
@@ -399,7 +418,6 @@
 .files--control:hover {
     opacity: 1;
 }
-
 
 
 

@@ -25,11 +25,11 @@
         <div class="body">
             <div class="bars--div">
                 <div class="bars--converters">
-                    <h1>Converters</h1>
+                    <h1>Konvertálók</h1>
                     <ul>
-                        <li><button onclick="setSpace(id)" id="1" class="spaceBtn spaceBtn--active">PDF Merger</button></li>
-                        <li><button onclick="setSpace(id)" id="2" class="spaceBtn">Coming soon</button></li>
-                        <li><button onclick="setSpace(id)" id="3" class="spaceBtn">Coming soon</button></li>
+                        <li><button onclick="setSpace(id)" id="1" class="spaceBtn spaceBtn--active">PDF Címke Egyesítő</button></li>
+                        <li><button onclick="setSpace(id)" id="2" class="spaceBtn">Hamarosan</button></li>
+                        <li><button onclick="setSpace(id)" id="3" class="spaceBtn">Hamarosan</button></li>
                     </ul>
                 </div>
                 <div class="bars--guide">
@@ -39,7 +39,7 @@
             <div class="space">
 
                 <div class="space--1">                 
-                    <div class="space1--title">PDF Merger</div>
+                    <div class="space1--title">PDF Címke Egyesítő</div>
                     <div class="space1--illustration">
                         <img src={% static "/assets/illustration.png" %} alt="illustration">
                     </div>
@@ -90,16 +90,24 @@
                 </div>
 
                 <div class="space--2">
-                    COMING SOON
+                    <h3>EZ A KOVERTER JELENLEG MÉG NEM ELÉRHETŐ</h3>
                 </div>
 
                 <div class="space--3">
-                    COMING SOON
+                    <h3>EZ A KOVERTER JELENLEG MÉG NEM ELÉRHETŐ</h3>
                 </div>
 
                 <div class="space--4">
-                    GUIDE
+                    <h1 class="guideTitle">PDF Címke Egyesítő</h1><br>
+                    <p>A PDF Címke Egyesítő minden olyan PDF dokumentumot elfogad, amely oldalainak bal felső sarkában található egy címke. A "konvertálás" gombra kattintva a program egyesíti ezeket a címkéket egy másik PDF fájlba. Az egyesítés sorait és oszlopait a konvertálás előtt, a "sorok" és "oszlopok" mezőkben lehet személyre szabni.</p>
+                    <br>
+                    <p>A konvertálás befejeztével a kész PDF állományt a "Letöltés" gombra kattintva egyből le lehet tölteni, illetve az "Előnézet" gomb segítségével letöltés nélkül meg lehet nyitni</p>
+                    <br>
+                    <h1 class="guideTitle">Hol tudom visszanézni az elkészült fájljaimat?</h1><br>
+                    <p>Az elkészült fájlokat bármikor vissza lehet nézni a jobb felső sarokban lévő "profil" ikonra kattintva. A megjelenő menüben a felhasználó neve alatt található "fájlok" menüpontban vissza lehet nézni a legutóbbi fájljait, megnézni vagy akár újra letölteni azokat.</p>
                 </div>
+
+
                 {% if files %}  
                 <div class="space--5 filesDiv">               
                     {% for file in files %}
