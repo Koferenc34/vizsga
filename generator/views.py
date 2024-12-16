@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 from django.views import View
 from .models import File
 from .forms import UploadFileForm, LoginForm
-from . import handle, cimke
+from .converters import cimke
 import os
 
 
@@ -49,17 +49,28 @@ class Register_page(View):
         email = request.POST['email']
         password = request.POST['password']
 
-        if len(password) < 8 :
-            return render(request,'generator/registration.html', {'error': 'Túl rövid jelszó'})
-        
-        user = User.objects.create_user(username=username, password=password, email=email)
-        user.save()
+        # Leszedi a szóközöket a stringekről és megnézi hogy üresek-e vagy nem
+        if(username.strip() and email.strip() and password.strip()):
 
-        user = authenticate(
-                username = username,
-                password = password
-            )
-        login(request, user)
+            # Foglalt-e a felhasználónév
+            if(User.objects.filter(username = username)):
+                return render(request,'generator/registration.html', {'error': 'Már létezik ilyen felhasználó'})
+            # Jelszó hossz
+            if len(password) < 8 :
+                return render(request,'generator/registration.html', {'error': 'Túl rövid jelszó'})
+
+            # Új felhasználó mentése
+            user = User.objects.create_user(username=username, password=password, email=email)
+            user.save()
+
+            # Bejelentkeztetés
+            user = authenticate(
+                    username = username,
+                    password = password
+                )
+            login(request, user)
+
+        else: return render(request,'generator/registration.html', {'error': 'Hiányos adatok'})
 
         return redirect('index')
 
@@ -81,18 +92,23 @@ class Index(View):
             form = UploadFileForm(request.POST, request.FILES)
             files = File.objects.filter(owner=request.user)
 
-            if (form.is_valid()) and str(request.FILES.get('file'))[-4:] == ".pdf":
+            # PDF Cimke Egyesítő
+            # PDF végződés és konverter ellenőrzése
+            if (form.is_valid()) and str(request.FILES.get('file'))[-4:] == ".pdf" and str(request.POST.get("converter")) == "cimke":
                 
-                print(str(request.FILES.get('file')))
-                file_path = os.path.join(settings.BASE_DIR, "generator\\Static", str(request.FILES.get('file')))
+                file_path = os.path.join(settings.BASE_DIR, "generator\\Static\\tempFiles", str(request.FILES.get('file')))
+                file = request.FILES.get('file')
+                cols = int(request.POST.get('cols'))
+                rows = int(request.POST.get('rows'))
+                username = str(request.user.username)
                     
                 # Fájl mentése
-                handle.uploaded_file(request.FILES.get('file'), file_path)
+                with open(file_path, "wb+") as destination:
+                    for chunk in file.chunks():
+                        destination.write(chunk)
                 
-                # Fájl átalakitása
-                images = cimke.pdf_to_images(file_path)
-                pages = cimke.merge(images, int(request.POST.get('cols')),int(request.POST.get('rows')))     
-                file_name = cimke.export(pages, str(request.user.username))
+                # Fájl átalakitása         
+                file_name = cimke.convert(file_path,cols,rows,username)
                 
                 f = File(owner=request.user, filename=file_name)
                 f.save()
@@ -111,15 +127,12 @@ class Index(View):
 class Download(View):
     def get(self,request, fileName):
         username = fileName.split('_')[0]
-
         if str(request.user.username) == username:
-
             file = os.path.join(settings.BASE_DIR, f"output/{fileName}")
-
             fileOpened = open(file, 'rb')
-    
-            return FileResponse(fileOpened)
-    
+        
+            return FileResponse(fileOpened)    
+            
         return redirect('/')
 
 

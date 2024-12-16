@@ -5,14 +5,11 @@ from datetime import datetime
 import os
 from tqdm import tqdm
 
-# pdf_to_images() - kapott egy "pdf" paramétert
-# export(pages) - visszaadja a file nevét, kapott egy "username" paramétert
 
-
-def main():
-    images = pdf_to_images("input.pdf")   # Képek betöltése a PDF-ből
-    pages = merge(images)      # Képek összefűzése oldalakra
-    export(pages)              # Oldalak exportálása PDF-be
+def convert(filePath, cols, rows, userName):
+    images = pdf_to_images(filePath)   # Képek betöltése a PDF-ből
+    pages = merge(images, cols, rows)  # Képek összefűzése oldalakra
+    return export(pages, userName)     # Oldalak exportálása PDF-be
 
 def pdf_to_images(pdf):
     # PDF fájl megnyitása
@@ -76,5 +73,4 @@ def export(pages, username):
 
     return file_name
 
-if __name__ == "__main__":
-    main()
+
