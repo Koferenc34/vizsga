@@ -7,6 +7,7 @@
 
 <body onload="Main()">
     <div class="container" onclick="Hide_userDiv()">
+
         <nav class="navbar">
             <button class="icon--btn" onclick="barsToggle()">
                 <img class="navbar--icon" width="30px" src={% static "/assets/bars.svg" %} class="bar" alt="bars-image">
@@ -23,6 +24,8 @@
         </nav>
         
         <div class="body">
+
+            {% comment %} Oldalsó panel {% endcomment %}
             <div class="bars--div">
                 <div class="bars--converters">
                     <h1>Konvertálók</h1>
@@ -36,8 +39,10 @@
                     <button onclick="setSpace(id)" id="4" class="spaceBtn guideBtn">Használati útmutató</button>
                 </div>
             </div>
+
             <div class="space">
 
+                {% comment %} PDF Cimke egyesítő {% endcomment %}
                 <div class="space--1">                 
                     <div class="space1--title">PDF Címke Egyesítő</div>
                     <div class="space1--illustration">
@@ -54,6 +59,7 @@
                         <div class="fileBox">
                             <label for="fileInput1" class="BigBtn fileBtn">PDF Feltöltése</label> 
                             <input type="file" style="display: none;"  name="file" id="fileInput1">
+                            <input type="hidden" name="converter" value="cimke" >
                             <span class="fileBtn--fileName1">File name</span>
                         </div>
                         
@@ -65,7 +71,7 @@
                                         <label for="rows">Sorok:</label>
                                     </td>
                                     <td>
-                                        <input type="number" class="layoutInput" name="rows" id="rows" min="0" value="0">
+                                        <input type="number" class="layoutInput" name="rows" id="rows" min="1" value="5" max="5">
                                     </td>
                                 </tr>
                                 <tr>
@@ -73,7 +79,7 @@
                                         <label for="cols">Oszlopok:</label>
                                     </td>
                                     <td>
-                                        <input type="number" class="layoutInput" name="cols" id="cols" min="0" value="0">
+                                        <input type="number" class="layoutInput" name="cols" id="cols" min="1" value="4" max="4">
                                     </td>
                                 </tr>
                             </table>
@@ -89,6 +95,7 @@
                     {% endif %}
                 </div>
 
+
                 <div class="space--2">
                     <h3>EZ A KOVERTER JELENLEG MÉG NEM ELÉRHETŐ</h3>
                 </div>
@@ -97,6 +104,7 @@
                     <h3>EZ A KOVERTER JELENLEG MÉG NEM ELÉRHETŐ</h3>
                 </div>
 
+                {% comment %} Használati útmutató {% endcomment %}
                 <div class="space--4">
                     <h1 class="guideTitle">PDF Címke Egyesítő</h1><br>
                     <p>A PDF Címke Egyesítő minden olyan PDF dokumentumot elfogad, amely oldalainak bal felső sarkában található egy címke. A "konvertálás" gombra kattintva a program egyesíti ezeket a címkéket egy másik PDF fájlba. Az egyesítés sorait és oszlopait a konvertálás előtt, a "sorok" és "oszlopok" mezőkben lehet személyre szabni.</p>
@@ -107,7 +115,7 @@
                     <p>Az elkészült fájlokat bármikor vissza lehet nézni a jobb felső sarokban lévő "profil" ikonra kattintva. A megjelenő menüben a felhasználó neve alatt található "fájlok" menüpontban vissza lehet nézni a legutóbbi fájljait, megnézni vagy akár újra letölteni azokat.</p>
                 </div>
 
-
+                {% comment %} Felhasználó Fájlok {% endcomment %}
                 {% if files %}  
                 <div class="space--5 filesDiv">               
                     {% for file in files %}
@@ -132,6 +140,8 @@
             </div>
         </div>
     </div>
+
+    {% comment %} Profile ikon menü {% endcomment %}
     <button class="userToggleBtn" onclick="userDiv_toggle()"></button>
     <div class="userDiv">
         <div class="userName">{{user.username}}</div>
@@ -140,6 +150,7 @@
             <a href={% url "logout" %}>KIJELENTKEZÉS</a>
         </div>
     </div>
+    {% comment %} Script {% endcomment %}
     <script src={% static "index.js" %}></script>
 </body>
 

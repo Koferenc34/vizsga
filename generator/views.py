@@ -92,8 +92,9 @@ class Index(View):
             form = UploadFileForm(request.POST, request.FILES)
             files = File.objects.filter(owner=request.user)
 
-            # PDF végződés ellenőrzése
-            if (form.is_valid()) and str(request.FILES.get('file'))[-4:] == ".pdf":
+            # PDF Cimke Egyesítő
+            # PDF végződés és konverter ellenőrzése
+            if (form.is_valid()) and str(request.FILES.get('file'))[-4:] == ".pdf" and str(request.POST.get("converter")) == "cimke":
                 
                 file_path = os.path.join(settings.BASE_DIR, "generator\\Static\\tempFiles", str(request.FILES.get('file')))
                 file = request.FILES.get('file')
@@ -126,15 +127,12 @@ class Index(View):
 class Download(View):
     def get(self,request, fileName):
         username = fileName.split('_')[0]
-
         if str(request.user.username) == username:
-
             file = os.path.join(settings.BASE_DIR, f"output/{fileName}")
-
             fileOpened = open(file, 'rb')
-    
-            return FileResponse(fileOpened)
-    
+        
+            return FileResponse(fileOpened)    
+            
         return redirect('/')
 
 
