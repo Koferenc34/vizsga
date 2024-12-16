@@ -9,10 +9,10 @@ from tqdm import tqdm
 # export(pages) - visszaadja a file nevét, kapott egy "username" paramétert
 
 
-def main():
-    images = pdf_to_images("input.pdf")   # Képek betöltése a PDF-ből
-    pages = merge(images)      # Képek összefűzése oldalakra
-    export(pages)              # Oldalak exportálása PDF-be
+def convert(filePath, cols, rows, userName):
+    images = pdf_to_images(filePath)   # Képek betöltése a PDF-ből
+    pages = merge(images, cols, rows)  # Képek összefűzése oldalakra
+    return export(pages, userName)     # Oldalak exportálása PDF-be
 
 def pdf_to_images(pdf):
     # PDF fájl megnyitása
