@@ -3,24 +3,22 @@ const Main = () => {
     document.querySelector('.bars--div').style.display = 'flex';
     document.querySelector('.userDiv').style.display = 'none';
 
-    Space1()
-
 }
 
 function Hide_userDiv() {
     document.querySelector('.userDiv').style.display = 'none';
 }
 
-function Space1() {
-    let inputFile = document.getElementById('fileInput1')
-    let fileNameField = document.querySelector('.fileBtn--fileName1')
+function Space(id) {
+    let inputFile = document.getElementById(`fileInput${id}`)
+    let fileNameField = document.querySelector(`.fileBtn--fileName${id}`)
 
     inputFile.addEventListener('change', (event) => {
         let name = event.target.files[0].name;
         fileNameField.innerHTML = name;
         fileNameField.style.display = 'inline-block'
-        document.getElementById('ConvertBtn').style.display = "block";
-        document.querySelector('.layoutBox').style.display = "flex";
+        document.getElementById(`ConvertBtn${id}`).style.display = "block";
+        document.querySelector(`.layoutBox${id}`).style.display = "flex";
         
     })
 }
@@ -30,8 +28,8 @@ function userDiv_toggle() {
     (userDiv.style.display == 'none') ? userDiv.style.display = 'flex' : userDiv.style.display = 'none';
 }
 
-function Convert_display() {
-    document.getElementById('ConvertBtn').style.display = "none";
+function Convert_display(id) {
+    document.getElementById(id).style.display = "none";
     document.getElementById('convert').style.display = "block";
 }
 
@@ -69,5 +67,8 @@ function setSpace(id) {
 
     document.querySelector(`.space--${id}`).style.display = 'flex';
 
-
+    if (id != 3 || id != 4){
+        Space(id);
+    }
+    
 }
