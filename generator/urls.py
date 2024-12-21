@@ -6,5 +6,6 @@ urlpatterns = [
     path('login', views.Login_page.as_view(), name='login_page'),
     path('logout', views.Logout_page.as_view(), name="logout"),
     path('register', views.Register_page.as_view(), name='register_page'),
-    path('download/<str:fileName>', views.Download.as_view(), name="download")
+    path('download/<str:userName>/<str:fileName>', views.Download.as_view(), name="download"),
+    path('delete/<str:userName>/<int:id>/<str:fileName>', views.Delete.as_view(), name="delete"),
 ]

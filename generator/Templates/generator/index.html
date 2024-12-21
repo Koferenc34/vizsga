@@ -5,7 +5,7 @@
     <link rel="stylesheet" href={% static "styles.css" %}>
 </head>
 
-<body onload="Main()">
+<body onload="javascript: Main(); setSpace({{ spaceId }});">
     <div class="container" onclick="Hide_userDiv()">
 
         <nav class="navbar">
@@ -31,12 +31,11 @@
                     <h1>Konvertálók</h1>
                     <ul>
                         <li><button onclick="setSpace(id)" id="1" class="spaceBtn spaceBtn--active">PDF Címke Egyesítő</button></li>
-                        <li><button onclick="setSpace(id)" id="2" class="spaceBtn">Hamarosan</button></li>
-                        <li><button onclick="setSpace(id)" id="3" class="spaceBtn">Hamarosan</button></li>
+                        <li><button onclick="setSpace(id)" id="2" class="spaceBtn">Kép Vízjel készítés</button></li>
                     </ul>
                 </div>
                 <div class="bars--guide">
-                    <button onclick="setSpace(id)" id="4" class="spaceBtn guideBtn">Használati útmutató</button>
+                    <button onclick="setSpace(id)" id="3" class="spaceBtn guideBtn">Használati útmutató</button>
                 </div>
             </div>
 
@@ -44,17 +43,18 @@
 
                 {% comment %} PDF Cimke egyesítő {% endcomment %}
                 <div class="space--1">                 
-                    <div class="space1--title">PDF Címke Egyesítő</div>
-                    <div class="space1--illustration">
-                        <img src={% static "/assets/illustration.png" %} alt="illustration">
+                    <div class="space--title">PDF Címke Egyesítő</div>
+                    <div class="space--illustration">
+                        <img src={% static "/assets/illustrationCimke.png" %} alt="illustration">
                     </div>
-                    {% if file %}
-                    <div class="space1--controlDownload">
-                        <a href="download/{{file}}" download="file"><button class=" BigBtn space1--download ">Letöltés</button></a>
-                        <a href="download/{{file}}" target="_blank"><button class="space1--preview">Előnézet</button></a>
+                    {% if file and spaceId == 1 %}
+                    <div class="space--controlDownload">
+                        <a href="download/{{user.username}}/{{file}}" download="file"><button class=" BigBtn space--download ">Letöltés</button></a>
+                        <a href="download/{{user.username}}/{{file}}" target="_blank"><button class="space--preview">Előnézet</button></a>
+                        <a href="/"><button class="space--preview">Vissza</button></a>
                     </div>
                     {% else %}
-                    <form class="space1--control" action={% url "index" %} method="POST" enctype="multipart/form-data">
+                    <form class="space--control" action={% url "index" %} method="POST" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="fileBox">
                             <label for="fileInput1" class="BigBtn fileBtn">PDF Feltöltése</label> 
@@ -64,7 +64,7 @@
                         </div>
                         
 
-                        <div class="layoutBox" style="display: none;">
+                        <div class="layoutBox1 layoutBox" style="display: none;">
                             <table>
                                 <tr>
                                     <td>
@@ -85,7 +85,7 @@
                             </table>
                         </div>
 
-                        <button onclick="Convert_display()" type="submit" id="ConvertBtn" class="BigBtn" style="display: none;">Konvertálás</button>
+                        <button onclick="Convert_display(id)" type="submit" id="ConvertBtn1" class="BigBtn" style="display: none;">Konvertálás</button>
                         <div id="convert" style="position: relative; display: none;">
                             <div class="convertingCircle"></div>
                             <span class="convert--title">Kérlek várj...</span>
@@ -95,21 +95,61 @@
                     {% endif %}
                 </div>
 
-
+                {% comment %} Kép Vízjel készítés {% endcomment %}
                 <div class="space--2">
-                    <h3>EZ A KOVERTER JELENLEG MÉG NEM ELÉRHETŐ</h3>
-                </div>
+                    
+                    <div class="space--title">Kép Vízjel készítés</div>
+                    <div class="space--illustration">
+                        <img src={% static "/assets/illustrationVizjel.png" %} alt="illustration">
+                    </div>
+                    {% if file and spaceId == 2 %}
+                    <div class="space--controlDownload">
+                        <a href="download/{{user.username}}/{{file}}" download="file"><button class=" BigBtn space--download ">Letöltés</button></a>
+                        <a href="download/{{user.username}}/{{file}}" target="_blank"><button class="space--preview">Előnézet</button></a>
+                        <a href="/"><button class="space--preview">Vissza</button></a>
+                    </div>
+                    {% else %}
+                    <form class="space--control" action={% url "index" %} method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="fileBox">
+                            <label for="fileInput2" class="BigBtn fileBtn">Kép Feltöltése</label> 
+                            <input type="file" style="display: none;"  name="file" id="fileInput2">
+                            <input type="hidden" name="converter" value="vizjel" >
+                            <span class="fileBtn--fileName2">File name</span>
+                        </div>
 
-                <div class="space--3">
-                    <h3>EZ A KOVERTER JELENLEG MÉG NEM ELÉRHETŐ</h3>
+                        <div class="layoutBox2 layoutBox" style="display: none;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label for="watermark">Vízjel szöveg:  </label>
+                                    </td>
+                                    <td>
+                                        <input type="text" class="layoutInput" name="watermark" id="watermark" value="example.com">
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <button onclick="Convert_display(id)" type="submit" id="ConvertBtn2" class="BigBtn" style="display: none;">Konvertálás</button>
+                        <div id="convert" style="position: relative; display: none;">
+                            <div class="convertingCircle"></div>
+                            <span class="convert--title">Kérlek várj...</span>
+                        </div>
+                        
+                    </form>
+                    {% endif %}
                 </div>
 
                 {% comment %} Használati útmutató {% endcomment %}
-                <div class="space--4">
+                <div class="space--3">
                     <h1 class="guideTitle">PDF Címke Egyesítő</h1><br>
                     <p>A PDF Címke Egyesítő minden olyan PDF dokumentumot elfogad, amely oldalainak bal felső sarkában található egy címke. A "konvertálás" gombra kattintva a program egyesíti ezeket a címkéket egy másik PDF fájlba. Az egyesítés sorait és oszlopait a konvertálás előtt, a "sorok" és "oszlopok" mezőkben lehet személyre szabni.</p>
                     <br>
                     <p>A konvertálás befejeztével a kész PDF állományt a "Letöltés" gombra kattintva egyből le lehet tölteni, illetve az "Előnézet" gomb segítségével letöltés nélkül meg lehet nyitni</p>
+                    <br>
+                    <h1 class="guideTitle">Kép Vízjel készítés</h1><br>
+                    <p>A kép vízjel készítő egy felhasználó által hozzáadott szöveggel látja el a feltöltött képet. A vízjel minden képnek a jobb alsó sarkában foglal helyet. Elfogadott formátumok: png, jpg, jpeg, webp, svg</p>
                     <br>
                     <h1 class="guideTitle">Hol tudom visszanézni az elkészült fájljaimat?</h1><br>
                     <p>Az elkészült fájlokat bármikor vissza lehet nézni a jobb felső sarokban lévő "profil" ikonra kattintva. A megjelenő menüben a felhasználó neve alatt található "fájlok" menüpontban vissza lehet nézni a legutóbbi fájljait, megnézni vagy akár újra letölteni azokat.</p>
@@ -117,23 +157,26 @@
 
                 {% comment %} Felhasználó Fájlok {% endcomment %}
                 {% if files %}  
-                <div class="space--5 filesDiv">               
+                <div class="space--4 filesDiv">               
                     {% for file in files %}
                         <div class="filesDiv--files">
                             <div class="files--fileName">
-                                {{file.filename|cut:user.username|cut:'_' }}
+                                {{file.filename}}
                             </div>
-                            <a href="/download/{{file.filename}}" class="files--control" download="file">
+                            <a href="/download/{{user.username}}/{{file.filename}}" class="files--control" target="_blank">
+                                <img width="20px" src={% static "assets/eye.svg" %} >
+                            </a>
+                            <a href="/download/{{user.username}}/{{file.filename}}" class="files--control" download="file">
                                 <img width="20px" src={% static "assets/download.svg" %} >
                             </a>
-                            <a href="/download/{{file.filename}}" class="files--control" target="_blank">
-                                <img width="20px" src={% static "assets/eye.svg" %} alt="">
+                            <a href="/delete/{{user.username}}/{{file.id}}/{{file.filename}}" class="files--control">
+                                <img width="20px" src={% static "assets/trash.svg" %} >
                             </a>
                         </div>
                     {% endfor %}   
                 </div>  
                 {% else %}
-                <div class="space--5">
+                <div class="space--4">
                     <p>Nincsenek fájlok</p>
                 </div>                                 
                 {% endif %}                               
@@ -145,7 +188,7 @@
     <button class="userToggleBtn" onclick="userDiv_toggle()"></button>
     <div class="userDiv">
         <div class="userName">{{user.username}}</div>
-        <button class="spaceBtn filesBtn" id="5" onclick="setSpace(id)">Fájlok</button>
+        <button class="spaceBtn filesBtn" id="4" onclick="setSpace(id)">Fájlok</button>
         <div class="logout">
             <a href={% url "logout" %}>KIJELENTKEZÉS</a>
         </div>

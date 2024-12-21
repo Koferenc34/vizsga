@@ -9,7 +9,7 @@ from tqdm import tqdm
 def convert(filePath, cols, rows, userName):
     images = pdf_to_images(filePath)   # Képek betöltése a PDF-ből
     pages = merge(images, cols, rows)  # Képek összefűzése oldalakra
-    return export(pages, userName)     # Oldalak exportálása PDF-be
+    return export(pages, userName, cols, rows)     # Oldalak exportálása PDF-be
 
 def pdf_to_images(pdf):
     # PDF fájl megnyitása
@@ -60,17 +60,20 @@ def merge(images, cols, rows):
     pages = [img.convert('RGB') for img in pages]
     return pages
 
-def export(pages, username):
+def export(pages, username, cols, rows):
+    alreadyExist = False
     # Kimeneti mappa és fájlnév létrehozása
     out_folder = r"output"
-    file_name = username + "_cimke-" + datetime.today().strftime("%Y-%m-%d") + ".pdf"
+    file_name = "cimke-" + datetime.today().strftime("%Y-%m-%d") + f"_({rows}x{cols})" + ".pdf"
     
     # Kimeneti fájl útvonalának összeállítása
-    out_path = os.path.join(out_folder, file_name)
+    out_path = os.path.join(out_folder, username, file_name)
+
+    if(os.path.exists(out_path)): alreadyExist = True
     
     # Oldalak mentése PDF fájlba
     pages[0].save(out_path, save_all=True, append_images=pages[1:])
 
-    return file_name
+    return file_name, alreadyExist
 
 
