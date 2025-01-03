@@ -2,10 +2,15 @@
 
 ## Bevezetés
 
-Az Online File Converter célja, hogy egy saját felületen keresztül lehetővé tegye a vállalkozásunk számára a weboldalon való megjelenéshez szükséges címke átméretezését, a feltöltött autóalkatrész méretéhez való jobb alkalmazkodását.
+Az Online File Converter célja, hogy egy saját felületen keresztül lehetővé tegye a vállalkozásunk számára a weboldalon való megjelenéshez szükséges címke átméretezését, a feltöltött autóalkatrész méretéhez való jobb alkalmazkodását. A Kép Vízjel készítés pedig szintén azért készült, hogy a későbbiekben egy a saját weboldalon, a saját autóalkatrészeink képeit saját vízjellel, saját szöveges megjelöléssel láthassuk el.
 
 ### Motiváció
 
+A Converter alkalmazás létrehozásának célja az volt, hogy költséghatékonyabbá, egyszerűbbé tegyük a weboldal üzemeltetője által a vállalkozásunk számára generált egyen címkét. A címkét a weboldal üzemeltetője generálja, mely tartalmazza az autóalkatrész árusító weboldalon történő megjelenéshez szükséges adatokat. A weboldal tulajdonos által küldött első 300 címke használata során felmerült a vállalkozásunkban a változtatás igénye, mert mind árban, mind méretben más elvárásunk volt a címkével kapcsolatban. A címkéket a weboldal tulajdonosa nyomtatva postázza, ha nincs lehetőség nyomtatásra, ez nagy mennyiségű szükséglet esetén nagy költséggel jár. A küldött standart méret sok alkatrészre nagy, lelóg róla, hosszabb tárolás esetén leesik, és eltűnik. A tulajdonos által küldött tekercses kivitel beszerzése drága, sok felületre nem lehet ragasztani, több terméket a tisztántartás és a karcmentesség miatt be kell fóliázni nincs értelme a költséges ragasztásnak. A címke generátor segítségével a weboldal tulajdonos által küldött kódolt címkét A4-es méretre, sima nyomtató papírra nyomtatva vállalkozásunk jelentősen csökkenti a termékek regisztrálásának és tárolásának költségeit. A Converter használata nagyon megkönnyítette a munkánkat, mert nincs szükség hetekkel, előre megrendelni a felhasználni kívánt címke mennyiséget, saját szükséglet szerint, egy tintasugaras nyomtatóval, A4-es irodai papírra kinyomtatva, azonnal használni tudjuk a címkéket. A címke készítése során nem volt cél a tárolás és archiválás, mert minden címkét csak egyszer lehet felhasználni, ezért a program nem tárolja el a feltöltött pdf fájlt.
+A nem túl távoli jövőben szeretnénk egy saját webáruházat is indítani, melyben az általunk árusított autóalkatrészeket szeretnénk feltölteni.
+Ezért készült el a Kép Vízjel készítő alkalmazás. 
+Amikor a mostani, sokak által ismert webáruházba rögzítem a termékeket, az autóalkatrész pontos meghatározásához a cikkszámot beírom az internet keresőjébe és így beazonosítom a pontos évjáratot, motortípust, és persze a mások által meghatározott árat is. Így vettem észre, hogy a mi termékeink mosás és takarítás nélkül is jobban néznek ki, mint a webáruházban lévő más vállalkozások termékei. Ezért készült a Kép Vízjel készítő, hogy a saját képeinket megkülönböztethessük a mások által feltöltött képektől, megnehezítsük az illetéktelen felhasználásukat. Ebben a programban, a későbbiekben, a webáruház elkészítése után, szükség lesz olyan opcióra, mely a működés során felkínálja a mentés tárolás és a bővítés lehetőségét is. Ez azért lesz majd fontos, mert az elkészült képeket
+A két program készítése során további lehetőségként felmerült, hogy érdemes lenne egy olyan program készítésébe belevágni ami átvenné számlázási és postázási feladatokat. A távolabbi cél pedig egy saját  jól működő webáruház létrehozása.
 Az alkalmazás létrehozásának célja az volt, hogy költséghatékonyabbá, egyszerűbbé tegyük a weboldal üzemeltetője által a vállalkozásunk számára generált egyen címkét. A címkét a weboldal üzemeltetője generálja, mely tartalmazza az autóalkatrész árusító weboldalon történő megjelenéshez szükséges adatokat. 
 
 A weboldal tulajdonos által küldött első 300 címke használata során felmerült a vállalkozásunkban a változtatás igénye, mert mind árban, mind méretben más elvárásunk volt a címkével kapcsolatban. A címkéket a weboldal tulajdonosa nyomtatva postázza, ha nincs lehetőség nyomtatásra, ez nagy mennyiségű szükséglet esetén nagy költséggel jár. 
@@ -42,6 +47,9 @@ Az alkalmazás egyedi és érdekesebb algoritmusai közé tartoznak:
 - Felhasználók bejelentkezésének és regisztrációjának ellenőrzése
 - Használati útmutató megtekintése
 - A generált fájlok megtekintése, letöltése
+•	Nyers képek feltöltése 
+•	A feltöltött kép egyedi vízjeles letöltése
+
 
 ```python
 class Login_page(View):
@@ -128,6 +136,9 @@ A továbbfejlesztési lehetőségek közé tartoznak:
 ### 3.1 Program célja és funkciói
 
 A programunk a különálló oldalakon lévő címkék összeolvasztását teszi lehetővé.
+A Kép Vízjel készítő esetében egyedi, sajátságos képek létrehozása.
+Mindkét program egyszerű, de a vállalkozás tevékenységét nagyban segíti, hatékonyabb munkavégzést tesz lehetővé.
+
 ![Címkék](./markdown/cimke.png)
 ![Vízjel](./markdown/vizjel.png)
 
@@ -143,6 +154,7 @@ Weblapunk lokális használatra készült.
 ### 3.4 Program használata
 
 A program használata egyszerű. A weblap indításakor a felhasználó feltölti a nyers fájlokat, majd az elkészült dokumentumot letölti.
+A Kép Vízjel készítő használatához a saját mentett képünket feltöltjük, beírjuk azt a szöveget, amit meg szeretnénk jeleníteni a képen, majd az elkészült képet letöltjük.
 ![utmutato](./markdown/utmutato.png)
 
 ### 3.5 Hibajelzések
